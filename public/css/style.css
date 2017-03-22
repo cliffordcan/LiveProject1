@@ -1,0 +1,15 @@
+/* Adjust content down slightly for navbar */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+
+}
+
+.jumbotron {
+    background-image: url("../images/smithrock.jpg");
+    background-size: 100% 100%;
+}
+
+.mainbody {
+    color: white;
+}
