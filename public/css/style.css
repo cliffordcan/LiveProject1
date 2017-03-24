@@ -13,3 +13,8 @@ body {
 .mainbody {
     color: white;
 }
+
+#about {
+    background-image: url("../images/halfdome2.jpg");
+    background-size: 100% 100%;
+}
