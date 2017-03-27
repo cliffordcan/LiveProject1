@@ -1,9 +1,23 @@
 var User       = require('../app/models/user');
 var Friend       = require('../app/models/friend');
+var sql = require("mssql");
+var express = require ('express');
+var app = express();
+var bodyParser = require('body-parser')
+app.use (bodyParser());
+
+var urlencodedParser = bodyParser.urlencoded ({ extended: false})
+
 async = require("async");
 var path = require('path'),
     fs = require('fs');
 module.exports = function(app, passport,server) {
+    
+    app.post('/subscribe', urlencodedParser, function(request, response) {
+    console.log(request.body);
+    /*    response.render('subscribe',{qs:request.query});  */
+    });
+    
 	app.get('/', function(request, response) {
 		response.render('index.html');
 	});
