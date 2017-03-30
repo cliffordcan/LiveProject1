@@ -38,7 +38,8 @@
 <!-- Modal section for signing up for newsletters -->
 <!--Main page sign up button-->
 <button type="button" onclick="document.getElementById('email').style.display='block'" class="btn btn-warning" data-target="#email">Sign Up!</button>
-<!-- Begin Modal -->           
+<button type="button" onclick="document.getElementById('login').style.display='block'" class="btn btn-info" data-target="#login">Login!</button>
+<!-- Begin Email Sign Up Modal -->           
 <div class="modal" id="email" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -61,11 +62,39 @@
         <br>
         <button type="submit" class="btn btn-warning">Sign up!</button>
 	</footer>
+        </form>
       </div>
      </div><!-- modal-header -->
     </div><!-- modal-content -->
    </div><!-- modal-dialog -->
-  </div><!-- modal -->
+  </div><!-- /Email Sign Up modal -->
+    <!-- Begin Login Modal -->           
+    <div class="modal" id="login" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" onclick="document.getElementById('login').style.display='none'" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title" id="modalLabel">Login to your account:</h3>
+                <div class="modal-body">
+                    <p>Please enter your email and password below   
+                </div><!-- modal-body -->
+            
+       <div class="modal-footer">
+    <form action="/login" method="post" class="box login">
+	   <fieldset>
+	  <input type="text" tabindex="1" placeholder="Enter Your Email" name="username" required>
+      <input type="text" tabindex="1" placeholder="Enter Your Password" name="password" required>
+	   </fieldset>
+	<footer>
+        <br>
+        <button type="submit" class="btn btn-info">Login!</button>
+	</footer>
+        </form>
+      </div>
+     </div><!-- modal-header -->
+    </div><!-- modal-content -->
+   </div><!-- modal-dialog -->
+  </div><!-- /Loginmodal -->  
  </div>
 </div>
 
@@ -91,7 +120,7 @@
 <br>
 <br>
       <footer>
-        <p>Copyright &copy 2017 AutoThematic.Com</p>
+        <p>Copyright &copy; <script>new Date().getFullYear()>2010&&document.write(""+new Date().getFullYear());</script>, AutoThematic.Com</p>
       </footer>
     </div> <!-- /container -->
 

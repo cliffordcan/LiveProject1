@@ -5,18 +5,62 @@ var express = require ('express');
 var app = express();
 var bodyParser = require('body-parser')
 app.use (bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-var urlencodedParser = bodyParser.urlencoded ({ extended: false})
+var urlencodedParser = bodyParser.urlencoded ({ extended: true })
+    var config = {
+        user: 'Jake',
+        password: 'klpc1229',
+        server: 'STUDENT-PC\\SQLEXPRESS', 
+        database: 'NodeSubscriber',
+    };
 
 async = require("async");
 var path = require('path'),
     fs = require('fs');
 module.exports = function(app, passport,server) {
     
-    app.post('/subscribe', urlencodedParser, function(request, response) {
-    console.log(request.body);
-    /*    response.render('subscribe',{qs:request.query});  */
-    });
+app.post('/subscribe', urlencodedParser, function (request, response) {  
+            var firstname = request.body.firstname;
+            console.log(firstname);
+            var lastname = request.body.lastname;
+            console.log(lastname);
+            var email = request.body.email;
+            console.log(email);
+
+        var conn = new sql.Connection(config);
+        var req = new sql.Request(conn);
+        
+        conn.connect(function (err){
+           
+            if (err) {
+                
+                console.log(err);
+                return;
+            }
+               
+            req.query("INSERT INTO Subscriber (FirstName, LastName, Email) VALUES('"+ firstname +"', '"+ lastname +"', '"+ email +"')", function (err, recordset) { 
+                 if (err) { 
+                    console.log(err);
+                 }
+                else{
+                   console.log(recordset); 
+                }
+                conn.close();
+            });
+        });    
+    
+    
+response.redirect('/');
+    
+});
+ 
+
+
+    /*app.post('/subscribe', urlencodedParser, function(request, response) {
+    console.log(request.body.firstname);
+    /*    response.render('subscribe',{qs:request.query});  
+    });*/
     
 	app.get('/', function(request, response) {
 		response.render('index.html');
