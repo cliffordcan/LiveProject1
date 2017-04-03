@@ -1,3 +1,5 @@
+
+/*
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy    = require('passport-local').Strategy;
@@ -37,7 +39,7 @@ module.exports = function(passport) {
         });
     });
 
-     passport.use('login', new LocalStrategy({
+     passport.use('/login', new LocalStrategy({
         usernameField : 'email',
         passReqToCallback : true 
     },
@@ -254,3 +256,4 @@ module.exports = function(passport) {
 ));
 
 };
+*/

@@ -9,16 +9,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var urlencodedParser = bodyParser.urlencoded ({ extended: true })
     var config = {
-        user: 'Jake',
-        password: 'klpc1229',
-        server: 'STUDENT-PC\\SQLEXPRESS', 
-        database: 'NodeSubscriber',
+        user: 'Nico',
+        password: 'Mike1138',
+        server: 'STUDENT-PC\\SQLINSTANCE2', 
+        database: 'liveproject',
     };
 
 async = require("async");
 var path = require('path'),
     fs = require('fs');
 module.exports = function(app, passport,server) {
+    
+
     
 app.post('/subscribe', urlencodedParser, function (request, response) {  
             var firstname = request.body.firstname;
@@ -39,7 +41,7 @@ app.post('/subscribe', urlencodedParser, function (request, response) {
                 return;
             }
                
-            req.query("INSERT INTO Subscriber (FirstName, LastName, Email) VALUES('"+ firstname +"', '"+ lastname +"', '"+ email +"')", function (err, recordset) { 
+            req.query("INSERT INTO subscribers (name, surname, email) VALUES('"+ firstname +"', '"+ lastname +"', '"+ email +"')", function (err, recordset) { 
                  if (err) { 
                     console.log(err);
                  }
@@ -54,9 +56,67 @@ app.post('/subscribe', urlencodedParser, function (request, response) {
 response.redirect('/');
     
 });
+    
+app.configure(function() {
+  app.use(express.static('public'));
+  app.use(express.cookieParser());
+  app.use(express.bodyParser());
+  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(app.router);
+});
+    
+app.use(passport.initialize());
+app.use(passport.session());
  
+app.post('/login',
 
+         passport.authenticate('local', {successRedirect: '/',
+                                        failureRedirect: '/login',
+                                        failureFlash: 'Invalid username or password',
+                                        successFlash: 'Welcome!' })
+         ); 
 
+    /*
+app.get('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/users/' + user.username);
+    });
+  })(req, res, next);
+});
+    */
+  
+    
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd',
+   passReqToCallback: true,
+    session: false
+  },
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.verifyPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));   
+    
+    
+    
     /*app.post('/subscribe', urlencodedParser, function(request, response) {
     console.log(request.body.firstname);
     /*    response.render('subscribe',{qs:request.query});  

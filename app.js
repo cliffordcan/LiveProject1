@@ -8,7 +8,8 @@ var path = require('path'),
     fs = require('fs');
  var http = require('http')
 var server = http.createServer(app)
-
+var session = require('express-session');
+var flash = require('connect-flash');
  
 
 app.configure(function() {
