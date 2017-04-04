@@ -9,10 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var urlencodedParser = bodyParser.urlencoded ({ extended: true })
     var config = {
-        user: 'Nico',
-        password: 'Mike1138',
-        server: 'STUDENT-PC\\SQLINSTANCE2', 
-        database: 'liveproject',
+        user: 'nodeliveproject',
+        password: 'nodelive!',
+        server: 'mssql5.gear.host', 
+        database: 'nodeliveproject',
+        port:1433
     };
 
 async = require("async");
@@ -41,7 +42,7 @@ app.post('/subscribe', urlencodedParser, function (request, response) {
                 return;
             }
                
-            req.query("INSERT INTO subscribers (name, surname, email) VALUES('"+ firstname +"', '"+ lastname +"', '"+ email +"')", function (err, recordset) { 
+            req.query("INSERT INTO Subscriber (FirstName, LastName, Email) VALUES('"+ firstname +"', '"+ lastname +"', '"+ email +"')", function (err, recordset) { 
                  if (err) { 
                     console.log(err);
                  }
@@ -77,20 +78,6 @@ app.post('/login',
                                         failureFlash: 'Invalid username or password',
                                         successFlash: 'Welcome!' })
          ); 
-
-    /*
-app.get('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/users/' + user.username);
-    });
-  })(req, res, next);
-});
-    */
-  
     
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -160,7 +147,7 @@ passport.use(new LocalStrategy({
 		app.get('/login', function(request, response) {
 			response.render('login.html', { message: request.flash('error') });
 		});
-
+  
 		app.post('/login', passport.authenticate('login', {
 			successRedirect : '/about', 
 			failureRedirect : '/login', 
